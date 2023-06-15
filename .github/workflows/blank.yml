@@ -20,7 +20,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.2
         with:
           name: cpp_app
-          path: hello_win.exe
+          path: hello.exe
           retention-days: 5
 
   build_cpp_lin:
