@@ -8,6 +8,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  build_matrix:
+    strategy:
+      matrix:
+        os: [1, 2, 3]
+    runs-on: ubuntu-latest
+    steps:
+      - name: print matrix env
+        run: "echo os: $os"
+    
   build_cpp_win:
     runs-on: windows-latest
     steps:
