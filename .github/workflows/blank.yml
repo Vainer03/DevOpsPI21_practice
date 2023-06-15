@@ -9,6 +9,7 @@ on:
 
 jobs:
   build_matrix:
+    name: build matrix
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -21,25 +22,33 @@ jobs:
       
       - uses: actions/checkout@v3
       - name: build
-        run: g++ hello.cpp -o ${{ env.app_name }}.o
+        run: g++ hello.cpp -o ${{ env.app_name }}
           
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: cpp_app_matrix
-          path: ${{ env.app_name }}.o
+          path: ${{ env.app_name }}
           retention-days: 5
+          
+  send_to_telegram:
+    name: send notification to telegram
+    needs: build_matrix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: cpp_app_matrix
           
       - name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          document: ${{ env.app_name }}
+          document: hi_*.o
           message: |
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
-            
             Repository: ${{ github.repository }}
-            
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
