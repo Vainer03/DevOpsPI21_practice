@@ -21,7 +21,7 @@ jobs:
         run: |
           ls
           printenv
-        
+      - uses: ilammy/msvc-dev-cmd@v1
       - name: build
         run: |
           cl /EMsc hello.cpp
