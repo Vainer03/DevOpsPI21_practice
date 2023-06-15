@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_cpp:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
       - name: ls
@@ -24,11 +24,11 @@ jobs:
         
       - name: build
         run: |
-          g++ hello.cpp -o hello.o
+          cl /EMsc hello.cpp
           
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: cpp_app
-          path: hello.o
+          path: hello.exe
           retention-days: 5
