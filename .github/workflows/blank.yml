@@ -21,3 +21,8 @@ jobs:
         run: |
           ls -la
           printenv
+        
+      - name: build
+        run: |
+          gcc hello.cpp -o hello.o
+          
